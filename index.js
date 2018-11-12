@@ -7,17 +7,21 @@ server.on('request', function (request, response) {
     if (request.method === 'GET' && request.url === '/index') {
         fs.readFile('./index.html', (err, data) => {
             if (err) throw err;
-            console.log(data);
-            response.write('<p>' + data + '</p>');
+            response.write(data);
             response.end();
         });
 
     } else {
+        response.setHeader("Content-Type", "image/jpeg");
         response.statusCode = 404;
         fs.readFile('./cat.jpg', (err, data) => {
-        response.write(data);
-        response.end();
-    });
-};
+            if (err) throw err;
+            response.write(data);
+            response.end();
+        })
+    }
+});
+
+                    
 
 server.listen(8080);
