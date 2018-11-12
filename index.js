@@ -1,4 +1,4 @@
-ar http = require('http');
+var http = require('http');
 var fs = require('fs');
 var server = http.createServer();
 
@@ -14,9 +14,10 @@ server.on('request', function (request, response) {
 
     } else {
         response.statusCode = 404;
-        response.write('<img src="cat.jpg" alt="#">');
+        fs.readFile('./cat.jpg', (err, data) => {
+        response.write(data);
         response.end();
-    }
-});
+    });
+};
 
 server.listen(8080);
